@@ -21,6 +21,14 @@ public class Main {
                 }
             }
         }
+
+        ArrayList<String> binaryler = new ArrayList<>();
+        binaryler.add("1");
+        binaryler.add("a");
+        for (int i = 2; i < enB; i++) {
+            binaryler.add("a^" + String.valueOf(i));
+        }
+
         String[] sagsol = polinom.replace("x", "a").split("a" + String.valueOf(enB) + "\\+");
         if (sagsol.length == 1) {
             sagTaraf = sagsol[0];
@@ -31,11 +39,12 @@ public class Main {
         int n = (int) Math.pow(2, enB) - 1;
         System.out.println(n);
         elemanlar.add("a");
+        System.out.println("a^1= a");
         for (int i = 1; i < n; i++) {
             int tmp = i;
             if (tmp == enB - 1) {
                 elemanlar.add(sagTaraf);
-                System.out.println(elemanlar.get(elemanlar.size() - 1));
+                System.out.println("a^" + enB + "= " + elemanlar.get(elemanlar.size() - 1));
             } else {
                 String[] artiSplit = elemanlar.get(i - 1).split("\\+");
                 String eleman = "";
@@ -53,32 +62,54 @@ public class Main {
                 }
                 eleman = eleman.substring(0, eleman.length() - 1);
                 if (eleman.contains("a^" + String.valueOf(enB))) {
-                    eleman = eleman.replace("a^" + String.valueOf(enB), sagTaraf);
+
+                    eleman = eleman.replace("a^" + String.valueOf(enB) + "+", "");
+                    eleman += "+" + sagTaraf;
                 }
                 String[] xorSplit = eleman.split("\\+");
                 ArrayList<String> esitler = new ArrayList<>();
-                for (int k = 0; k < xorSplit.length-1; k++) {
-                    for (int j = k+1; j < xorSplit.length; j++) {
+                for (int k = 0; k < xorSplit.length - 1; k++) {
+                    for (int j = k + 1; j < xorSplit.length; j++) {
                         if (xorSplit[k].equals(xorSplit[j])) {
                             esitler.add(xorSplit[k]);
                         }
                     }
                 }
-                eleman="";
+                eleman = "";
                 for (int k = 0; k < xorSplit.length; k++) {
-                    boolean uyusuyor=false;
+                    boolean uyusuyor = false;
                     for (int j = 0; j < esitler.size(); j++) {
-                        if(xorSplit[k].equals(esitler.get(j))){
-                            uyusuyor=true;
+                        if (xorSplit[k].equals(esitler.get(j))) {
+                            uyusuyor = true;
                         }
                     }
-                    if (uyusuyor==false) {
-                        eleman+=xorSplit[k]+"+";
+                    if (uyusuyor == false) {
+                        eleman += xorSplit[k] + "+";
                     }
                 }
                 eleman = eleman.substring(0, eleman.length() - 1);
                 elemanlar.add(eleman);
-                System.out.println("a^" + (i + 1) + "= " + eleman);
+                String binary = "";
+                String[] bolunmus = eleman.split("\\+");
+
+                for (int j = binaryler.size() - 1; j >= 0; j--) {
+                    boolean varmi = false;
+                    for (int k = 0; k < bolunmus.length; k++) {
+
+                        if (bolunmus[k].equals(binaryler.get(j))) {
+                            varmi = true;
+                        }
+                    }
+                    if (varmi == true) {
+                        binary += "1";
+                    } else {
+                        binary += "0";
+                    }
+                }
+                int num = Integer.parseInt(binary, 2);
+                String hexa = Integer.toHexString(num);
+                System.out.println("a^" + (i + 1) + "= " + eleman + " " + binary+" "+hexa);
+
             }
         }
 
