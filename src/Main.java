@@ -36,7 +36,9 @@ public class Main {
         if (sagsol.length == 1) {
             sagTaraf = sagsol[0];
         } else {
-            sagTaraf = sagsol[0] + sagsol[1];
+            for (int i = 0; i < sagsol.length; i++) {
+                sagTaraf += sagsol[i];
+            }
         }
         int n = (int) Math.pow(2, enB) - 1;
 
@@ -106,10 +108,20 @@ public class Main {
 
                 }
                 eleman = eleman.substring(0, eleman.length() - 1);
+                //System.out.println(eleman + " dfdsdfs " + enB);
                 if (eleman.contains("a^" + String.valueOf(enB))) {
 
-                    eleman = eleman.replace("a^" + String.valueOf(enB) + "+", "");
-                    eleman += "+" + sagTaraf;
+                    //System.out.print("eleman: " + eleman);
+                    if (eleman.contains("a^" + String.valueOf(enB) + "+")) {
+                        eleman = eleman.replace("a^" + String.valueOf(enB) + "+", "");
+
+                        eleman += "+" + sagTaraf;
+                    } else if (eleman.contains("a^" + String.valueOf(enB))) {
+                        eleman = eleman.replace("a^" + String.valueOf(enB), "");
+
+                        eleman += sagTaraf;
+                    }
+                    //System.out.println("eleman: " + eleman);
                 }
                 String[] xorSplit = eleman.split("\\+");
                 ArrayList<String> esitler = new ArrayList<>();
