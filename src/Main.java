@@ -9,14 +9,14 @@ public class Main {
         ArrayList<String> hexler = new ArrayList<>();
         ArrayList<String> polinomHexler = new ArrayList<>();
         polinomHexler.add("0");
-        Scanner sc = new Scanner(System.in); //System.in is a standard input stream  
+        Scanner sc = new Scanner(System.in);
         System.out.print("İndirgenemez polinomu giriniz ör(x4+x+1): ");
         String polinom = sc.nextLine();              //reads string   
         String parcalar[] = polinom.split("\\+");
         System.out.print("Sonlu cismi oluşturan elemanlar listeleniyor...");
         int enB = 0;
         String sagTaraf = "";
-        for (int i = 0; i < parcalar.length; i++) { //polinomun derecesini bulmak için
+        for (int i = 0; i < parcalar.length; i++) { // indirgenemez polinomun derecesini bulunur
             if (parcalar[i].length() == 2) {
                 char ikili[] = parcalar[i].toCharArray();
                 if (ikili.length == 2 && Integer.parseInt(String.valueOf(ikili[1])) > enB) {
@@ -32,7 +32,7 @@ public class Main {
             binaryler.add("a^" + String.valueOf(i));
         }
 
-        String[] sagsol = polinom.replace("x", "a").split("a" + String.valueOf(enB) + "\\+");
+        String[] sagsol = polinom.replace("x", "a").split("a" + String.valueOf(enB) + "\\+"); // x4+x+1 => a4+a+1 e çevrilir
         if (sagsol.length == 1) {
             sagTaraf = sagsol[0];
         } else {
@@ -49,6 +49,8 @@ public class Main {
         elemanlar.add("a");
         String binary1 = "";
         String[] bolunmus1 = "a".split("\\+");
+
+        // binary karşılıkları bulunur
         for (int j = binaryler.size() - 1; j >= 0; j--) {
             boolean varmi = false;
             for (int k = 0; k < bolunmus1.length; k++) {
@@ -67,7 +69,7 @@ public class Main {
         String hexa1 = Integer.toHexString(num1);
         System.out.println("\na^1= a" + " (" + binary1 + "-" + hexa1 + ")");
         polinomHexler.add(hexa1);
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i < n; i++) { // elemanlar oluşturulur
             int tmp = i;
             if (tmp == enB - 1) {
                 elemanlar.add(sagTaraf);
@@ -108,10 +110,9 @@ public class Main {
 
                 }
                 eleman = eleman.substring(0, eleman.length() - 1);
-                //System.out.println(eleman + " dfdsdfs " + enB);
                 if (eleman.contains("a^" + String.valueOf(enB))) {
 
-                    //System.out.print("eleman: " + eleman);
+                    
                     if (eleman.contains("a^" + String.valueOf(enB) + "+")) {
                         eleman = eleman.replace("a^" + String.valueOf(enB) + "+", "");
 
@@ -121,7 +122,7 @@ public class Main {
 
                         eleman += sagTaraf;
                     }
-                    //System.out.println("eleman: " + eleman);
+                    
                 }
                 String[] xorSplit = eleman.split("\\+");
                 ArrayList<String> esitler = new ArrayList<>();
@@ -164,7 +165,7 @@ public class Main {
                     }
                 }
                 int num = Integer.parseInt(binary, 2);
-                String hexa = Integer.toHexString(num);
+                String hexa = Integer.toHexString(num); // hexadecimal karşılıkları oluşturulur.
                 System.out.println("a^" + (i + 1) + "= " + eleman + " (" + binary + "-" + hexa + ")");
                 polinomHexler.add(hexa);
             }
@@ -173,6 +174,8 @@ public class Main {
         System.out.print("Haritalamayı Giriniz: x->x^");
         int haritalama = sc.nextInt(); // kullanıcının girdiği integer haritalama değerini alır.        
         String[] cikisHexa = new String[hexler.size()];
+        
+        // elemanların hexadecimal değerleri karşılaştırılarak S- kutusu oluşturulur
         for (int i = 0; i < cikisHexa.length; i++) {
             cikisHexa[i] = "0";
         }
